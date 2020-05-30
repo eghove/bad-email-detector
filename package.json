@@ -1,0 +1,36 @@
+{
+  "name": "bad-email-detector",
+  "version": "1.0.0",
+  "description": "Sentiment and profanity analysis for text",
+  "main": "server.js",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eghove/bad-email-detector.git"
+  },
+  "author": "Eric Hove",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eghove/bad-email-detector/issues"
+  },
+  "homepage": "https://github.com/eghove/bad-email-detector#readme",
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "if-env": "^1.0.4"
+  }
+}
