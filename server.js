@@ -1,5 +1,5 @@
 require("dotenv").config();
-//const key = require("./keys");
+const key = require("./keys");
 const express = require("express");
 const path = require("path");
 const PORT = process.env.PORT || 3001;
@@ -7,6 +7,7 @@ const app = express();
 const bodyParser = require("body-parser");
 
 // pull in API routes
+const sentimentRoute = require("./api/controllers/sentimentController");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -19,7 +20,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Define API routes here
-
+app.use("/api", sentimentRoute);
 // Send every other request to the React app
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
