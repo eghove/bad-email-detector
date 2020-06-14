@@ -8,6 +8,7 @@ const bodyParser = require("body-parser");
 
 // pull in API routes
 const sentimentRoute = require("./api/controllers/sentimentController");
+const moderatorRoute = require("./api/controllers/moderatorController");
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -20,7 +21,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Define API routes here
-app.use("/api", sentimentRoute);
+app.use("/api/sentiment", sentimentRoute);
+app.use("/api/moderator", moderatorRoute);
 // Send every other request to the React app
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
