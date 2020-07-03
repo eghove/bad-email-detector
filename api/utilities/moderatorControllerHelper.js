@@ -1,3 +1,6 @@
+const { errors } = require("./customErrorMessages");
+
+require("./customErrorMessages");
 //object that stores the custom errors if the checks fail.
 const errorList = { customError: "" };
 
@@ -7,7 +10,7 @@ const checkIfNotEmpty = (data) => {
   if (data.length > 0) {
     return true;
   } else {
-    errorList.customError = "No text to evaluate.";
+    errorList.customError = errors.noText;
     return false;
   }
 };
@@ -17,7 +20,7 @@ const checkDataFormat = (data) => {
   if (data !== undefined && typeof data === "string") {
     return true;
   } else {
-    errorList.customError = "Improperly formatted data.";
+    errorList.customError = errors.badData;
     return false;
   }
 };
