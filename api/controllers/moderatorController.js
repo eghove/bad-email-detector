@@ -1,8 +1,9 @@
 const router = require("express").Router();
 const moderatorService = require("../services/moderatorService");
 
-router.get("/testmoderator", function (req, res) {
-  moderatorService.screenText("what the crap is going around here", res);
+router.post("/getmoderator", function (req, res) {
+  const data = req.body.text;
+  moderatorService.screenText(data, res);
 });
 
 module.exports = router;
