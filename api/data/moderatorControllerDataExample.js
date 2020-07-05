@@ -1,4 +1,5 @@
 // moderatorController expects to receive a json object from the client in the shape below.
-export const sampleData = {
+// this shape can be passed as is to moderatorService.js
+const sampleData = {
   text: "string to evaluate",
 };
