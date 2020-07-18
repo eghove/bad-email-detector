@@ -3,7 +3,6 @@ const axios = require("axios");
 
 const subscription_key = key.textAnalyticsKey.toString();
 const endpoint = key.textAnalyticsEndpoint.toString();
-// TODO - HELPER FUNCTIONS to validate the data
 
 module.exports = {
   getDocumentSentiment: function (req, res) {
@@ -14,8 +13,18 @@ module.exports = {
       data: req,
     })
       .then(function (response) {
+        // strip out some parts of the response
+        if (response.data.documents[0].id) {
+          delete response.data.documents[0].id;
+        }
         res.json(response.data);
       })
-      .catch((err) => res.status(422).json(err));
+      .catch((err) => {
+        // sanitizing the response to pull out API information
+        if (err["config"]) {
+          delete err["config"];
+        }
+        res.status(422).json(err);
+      });
   },
 };
