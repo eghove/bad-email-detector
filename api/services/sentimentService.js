@@ -13,10 +13,10 @@ module.exports = {
       data: req,
     })
       .then(function (response) {
-        // strip out some parts of the response
-        if (response.data.documents[0].id) {
-          delete response.data.documents[0].id;
-        }
+        // promote the score out of the nested response object
+        response.data.score = response.data.documents[0].score;
+        // remove the nested response object
+        delete response.data.documents;
         res.json(response.data);
       })
       .catch((err) => {
