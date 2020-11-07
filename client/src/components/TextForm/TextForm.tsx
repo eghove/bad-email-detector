@@ -2,6 +2,7 @@ import React, { FormEvent, useState } from "react";
 import styles from "./TextForm.module.css";
 
 // The component where user enters text. It will live inside BusinessLogic component
+// TODO: Figure out how to handle props without 'any' type.
 const TextForm = (props: any) => {
   
   // TODO: figure out the correct type to use for handleChange.

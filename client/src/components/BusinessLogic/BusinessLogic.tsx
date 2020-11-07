@@ -9,11 +9,25 @@ import api from "../../utils/api";
 const BusinessLogic = (props: any) => {
   // api.testGetModeratorScore();
   // api.testGetSentimentScore();
-  const [userText, setUserText] = useState();
+  const [userText, setUserText] = useState("");
+  const [moderatorScores, setModeratorScores] = useState();
+  const [sentimentScores, setSentimentScores] = useState();
 
-  const handleSubmit = (event: FormEvent) => {
-    alert(userText);
+  // helper function for getModeratorScores
+  const getModeratorScores = (userText:string) => {
+    api.getModeratorScores(userText).then(results => console.log(results));
   }
+
+  const getSentimentScores = (userText:string) => {
+    api.getSentimentScore(userText).then(results => console.log(results));
+  }
+  
+  const handleSubmit = (event: FormEvent) => {
+    getModeratorScores(userText);
+    getSentimentScores(userText);
+  }
+
+  
 
   return (
     <div className={styles.BusinessLogic}>
