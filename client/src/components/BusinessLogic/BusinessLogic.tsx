@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import styles from "./BusinessLogic.module.css";
 // importing components
 import TextForm from "../TextForm/TextForm";
@@ -9,12 +9,20 @@ import api from "../../utils/api";
 const BusinessLogic = (props: any) => {
   // api.testGetModeratorScore();
   // api.testGetSentimentScore();
-  const [userText, setUserText] = useState("Put your text here");
+  const [userText, setUserText] = useState();
+
+  const handleSubmit = (event: FormEvent) => {
+    alert(userText);
+  }
+
   return (
     <div className={styles.BusinessLogic}>
       <p>{userText}</p>
-      <TextForm />
-      <button onClick={() => setUserText("new text")}>-</button>
+      <TextForm
+        setUserText = {setUserText}
+        // presumes I want to handle the submission within the TextForm
+        handleSubmit = {handleSubmit} >
+      </TextForm>
     </div>
   );
 };
