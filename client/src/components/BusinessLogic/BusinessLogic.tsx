@@ -20,6 +20,8 @@ const initModeratorScores: moderatorClassification = {
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = (props: any) => {
   const [userText, setUserText] = useState("");
+  const [apiCallsInProgress, setApiCallsInProgress] = useState(0); //number of API calls in progress
+  const [apiCallsComplete, setApiCallsComplete] = useState(0); //number of API calls complete
   // customError state
   const [customError, setCustomError] = useState("");
   // moderator state
@@ -34,12 +36,15 @@ const BusinessLogic = (props: any) => {
 
   // helper function for getModeratorScores
   const getModeratorData = (userText: string) => {
-    api.getModeratorScores(userText).then((results) => {
-      setModeratorClassification(results.data.Classification);
-      if (results.data.Terms) {
-        setProfaneTerms(results.data.Terms);
-      }
-    });
+    api
+      .getModeratorScores(userText)
+      .then((results) => {
+        setModeratorClassification(results.data.Classification);
+        if (results.data.Terms) {
+          setProfaneTerms(results.data.Terms);
+        }
+      })
+      .finally(() => setApiCallsComplete(apiCallsComplete + 1));
   };
 
   // helper function for getSentimentScores
@@ -57,6 +62,8 @@ const BusinessLogic = (props: any) => {
 
   // handles resetting states on each new submit
   const resetStates = () => {
+    setApiCallsInProgress(0);
+    setApiCallsComplete(0);
     setCustomError("");
     setSentimentScore(0);
     setSentimentError([]);
