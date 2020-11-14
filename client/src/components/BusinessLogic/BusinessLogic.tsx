@@ -2,41 +2,68 @@ import React, { FormEvent, useState } from "react";
 import styles from "./BusinessLogic.module.css";
 // importing components
 import TextForm from "../TextForm/TextForm";
+import SentimentDisplay from "../SentimentDisplay/SentimentDisplay";
 // importing utilities
 import api from "../../utils/api";
 
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = (props: any) => {
-  // api.testGetModeratorScore();
-  // api.testGetSentimentScore();
   const [userText, setUserText] = useState("");
+  // customError state
+  const [customError, setCustomError] = useState("");
   const [moderatorScores, setModeratorScores] = useState();
-  const [sentimentScores, setSentimentScores] = useState();
+
+  // sentiment state
+  const [sentimentScore, setSentimentScore] = useState(0);
+  const [sentimentError, setSentimentError] = useState([]);
 
   // helper function for getModeratorScores
-  const getModeratorScores = (userText:string) => {
-    api.getModeratorScores(userText).then(results => console.log(results));
-  }
+  const getModeratorData = (userText: string) => {
+    api
+      .getModeratorScores(userText)
+      .then((results) => setModeratorScores(results.data));
+  };
 
-  const getSentimentScores = (userText:string) => {
-    api.getSentimentScore(userText).then(results => console.log(results));
-  }
-  
+  // helper function for getSentimentScores
+  const getSentimentData = (userText: string) => {
+    api.getSentimentScore(userText).then((results) => {
+      // console.log(results.data);
+      if (results.data.customError) {
+        setCustomError(results.data.customError);
+      } else {
+        setSentimentScore(results.data.score);
+        setSentimentError(results.data.errors);
+      }
+    });
+  };
+
+  // handles resetting states on each new submit
+  const resetStates = () => {
+    setCustomError("");
+    setSentimentScore(0);
+    setSentimentError([]);
+  };
+
+  // handle submit function
   const handleSubmit = (event: FormEvent) => {
-    getModeratorScores(userText);
-    getSentimentScores(userText);
-  }
-
-  
+    resetStates();
+    // getModeratorData(userText);
+    getSentimentData(userText);
+  };
 
   return (
     <div className={styles.BusinessLogic}>
       <p>{userText}</p>
       <TextForm
-        setUserText = {setUserText}
+        setUserText={setUserText}
         // presumes I want to handle the submission within the TextForm
-        handleSubmit = {handleSubmit} >
-      </TextForm>
+        handleSubmit={handleSubmit}
+      />
+      {customError.length > 0 ? (
+        <p>{customError}</p>
+      ) : (
+        <SentimentDisplay sentimentScore={sentimentScore} />
+      )}
     </div>
   );
 };
