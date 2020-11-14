@@ -6,6 +6,16 @@ import api from "../../utils/api";
 import TextForm from "../TextForm/TextForm";
 import SentimentDisplay from "../SentimentDisplay/SentimentDisplay";
 import ModeratorDisplay from "../ModeratorDisplay/ModeratorDisplay";
+// import types
+import { moderatorClassification } from "../../types/ModeratorTypes";
+
+// helper variables
+const initModeratorScores: moderatorClassification = {
+  ExplicitAdult: {},
+  ProfaneOffensive: {},
+  ReviewRecommended: false,
+  SuggestiveMature: {},
+};
 
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = (props: any) => {
@@ -13,7 +23,9 @@ const BusinessLogic = (props: any) => {
   // customError state
   const [customError, setCustomError] = useState("");
   // moderator state
-  const [moderatorClassification, setModeratorClassification] = useState({});
+  const [moderatorClassification, setModeratorClassification] = useState(
+    initModeratorScores
+  );
   const [profaneTerms, setProfaneTerms] = useState([]);
 
   // sentiment state
@@ -48,7 +60,7 @@ const BusinessLogic = (props: any) => {
     setCustomError("");
     setSentimentScore(0);
     setSentimentError([]);
-    setModeratorClassification({});
+    setModeratorClassification(initModeratorScores);
     setProfaneTerms([]);
   };
 
@@ -67,11 +79,17 @@ const BusinessLogic = (props: any) => {
         // presumes I want to handle the submission within the TextForm
         handleSubmit={handleSubmit}
       />
-      <ModeratorDisplay test="test" />
+
       {customError.length > 0 ? (
         <p>{customError}</p>
       ) : (
-        <SentimentDisplay sentimentScore={sentimentScore} />
+        <React.Fragment>
+          <ModeratorDisplay
+            moderatorClassification={moderatorClassification}
+            profaneTerms={profaneTerms}
+          />
+          <SentimentDisplay sentimentScore={sentimentScore} />
+        </React.Fragment>
       )}
     </div>
   );
