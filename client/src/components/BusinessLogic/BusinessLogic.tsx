@@ -12,7 +12,9 @@ const BusinessLogic = (props: any) => {
   const [userText, setUserText] = useState("");
   // customError state
   const [customError, setCustomError] = useState("");
-  const [moderatorScores, setModeratorScores] = useState();
+  // moderator state
+  const [moderatorClassification, setModeratorClassification] = useState({});
+  const [profaneTerms, setProfaneTerms] = useState([]);
 
   // sentiment state
   const [sentimentScore, setSentimentScore] = useState(0);
@@ -20,9 +22,12 @@ const BusinessLogic = (props: any) => {
 
   // helper function for getModeratorScores
   const getModeratorData = (userText: string) => {
-    api
-      .getModeratorScores(userText)
-      .then((results) => setModeratorScores(results.data));
+    api.getModeratorScores(userText).then((results) => {
+      setModeratorClassification(results.data.Classification);
+      if (results.data.Terms) {
+        setProfaneTerms(results.data.Terms);
+      }
+    });
   };
 
   // helper function for getSentimentScores
@@ -43,12 +48,14 @@ const BusinessLogic = (props: any) => {
     setCustomError("");
     setSentimentScore(0);
     setSentimentError([]);
+    setModeratorClassification({});
+    setProfaneTerms([]);
   };
 
   // handle submit function
   const handleSubmit = (event: FormEvent) => {
     resetStates();
-    // getModeratorData(userText);
+    getModeratorData(userText);
     getSentimentData(userText);
   };
 
