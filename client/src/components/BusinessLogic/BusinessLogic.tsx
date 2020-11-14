@@ -1,10 +1,11 @@
 import React, { FormEvent, useState } from "react";
 import styles from "./BusinessLogic.module.css";
+// importing utilities
+import api from "../../utils/api";
 // importing components
 import TextForm from "../TextForm/TextForm";
 import SentimentDisplay from "../SentimentDisplay/SentimentDisplay";
-// importing utilities
-import api from "../../utils/api";
+import ModeratorDisplay from "../ModeratorDisplay/ModeratorDisplay";
 
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = (props: any) => {
@@ -59,6 +60,7 @@ const BusinessLogic = (props: any) => {
         // presumes I want to handle the submission within the TextForm
         handleSubmit={handleSubmit}
       />
+      <ModeratorDisplay test="test" />
       {customError.length > 0 ? (
         <p>{customError}</p>
       ) : (
