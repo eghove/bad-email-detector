@@ -20,8 +20,8 @@ const initModeratorScores: moderatorClassification = {
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = (props: any) => {
   const [userText, setUserText] = useState("");
-  const [apiCallsInProgress, setApiCallsInProgress] = useState(0); //number of API calls in progress
-  const [apiCallsComplete, setApiCallsComplete] = useState(0); //number of API calls complete
+  const [apiCallStatus, setApiCallStatus] = useState("");
+
   // customError state
   const [customError, setCustomError] = useState("");
   // moderator state
@@ -35,35 +35,27 @@ const BusinessLogic = (props: any) => {
   const [sentimentError, setSentimentError] = useState([]);
 
   // helper function for getModeratorScores
-  const getModeratorData = (userText: string) => {
-    api
-      .getModeratorScores(userText)
-      .then((results) => {
-        setModeratorClassification(results.data.Classification);
-        if (results.data.Terms) {
-          setProfaneTerms(results.data.Terms);
-        }
-      })
-      .finally(() => setApiCallsComplete(apiCallsComplete + 1));
+  const getModeratorData = async (userText: string) => {
+    let results = await api.getModeratorScores(userText);
+    setModeratorClassification(results.data.Classification);
+    if (results.data.Terms) {
+      setProfaneTerms(results.data.Terms);
+    }
   };
 
   // helper function for getSentimentScores
-  const getSentimentData = (userText: string) => {
-    api.getSentimentScore(userText).then((results) => {
-      // console.log(results.data);
-      if (results.data.customError) {
-        setCustomError(results.data.customError);
-      } else {
-        setSentimentScore(results.data.score);
-        setSentimentError(results.data.errors);
-      }
-    });
+  const getSentimentData = async (userText: string) => {
+    let results = await api.getSentimentScore(userText);
+    if (results.data.customError) {
+      setCustomError(results.data.customError);
+    } else {
+      setSentimentScore(results.data.score);
+      setSentimentError(results.data.errors);
+    }
   };
 
   // handles resetting states on each new submit
   const resetStates = () => {
-    setApiCallsInProgress(0);
-    setApiCallsComplete(0);
     setCustomError("");
     setSentimentScore(0);
     setSentimentError([]);
