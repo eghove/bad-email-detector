@@ -9,7 +9,7 @@ import ModeratorDisplay from "../ModeratorDisplay/ModeratorDisplay";
 // import types
 import { moderatorClassification } from "../../types/ModeratorTypes";
 
-// helper variables
+// helper variables TODO: Extract these helpders somewhere.
 const initModeratorScores: moderatorClassification = {
   ExplicitAdult: {},
   ProfaneOffensive: {},
@@ -17,11 +17,21 @@ const initModeratorScores: moderatorClassification = {
   SuggestiveMature: {},
 };
 
+const apiCallStates = {
+  initial: "initial",
+  inProgress: "in_progress",
+  complete: "complete",
+};
+
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = (props: any) => {
   const [userText, setUserText] = useState("");
-  const [apiCallStatus, setApiCallStatus] = useState("");
-
+  const [sentimentApiCallStatus, setSentimentApiCallStatus] = useState(
+    apiCallStates.initial
+  );
+  const [moderatorApiCallStatus, setModeratorApiCallStatus] = useState(
+    apiCallStates.initial
+  );
   // customError state
   const [customError, setCustomError] = useState("");
   // moderator state
@@ -36,15 +46,18 @@ const BusinessLogic = (props: any) => {
 
   // helper function for getModeratorScores
   const getModeratorData = async (userText: string) => {
+    setModeratorApiCallStatus(apiCallStates.inProgress);
     let results = await api.getModeratorScores(userText);
     setModeratorClassification(results.data.Classification);
     if (results.data.Terms) {
       setProfaneTerms(results.data.Terms);
     }
+    setModeratorApiCallStatus(apiCallStates.complete);
   };
 
   // helper function for getSentimentScores
   const getSentimentData = async (userText: string) => {
+    setSentimentApiCallStatus(apiCallStates.inProgress);
     let results = await api.getSentimentScore(userText);
     if (results.data.customError) {
       setCustomError(results.data.customError);
@@ -52,10 +65,13 @@ const BusinessLogic = (props: any) => {
       setSentimentScore(results.data.score);
       setSentimentError(results.data.errors);
     }
+    setSentimentApiCallStatus(apiCallStates.complete);
   };
 
   // handles resetting states on each new submit
   const resetStates = () => {
+    setSentimentApiCallStatus(apiCallStates.initial);
+    setModeratorApiCallStatus(apiCallStates.complete);
     setCustomError("");
     setSentimentScore(0);
     setSentimentError([]);
@@ -78,17 +94,23 @@ const BusinessLogic = (props: any) => {
         // presumes I want to handle the submission within the TextForm
         handleSubmit={handleSubmit}
       />
-
-      {customError.length > 0 ? (
-        <p>{customError}</p>
-      ) : (
+      {sentimentApiCallStatus === apiCallStates.complete &&
+      moderatorApiCallStatus === apiCallStates.complete ? (
         <React.Fragment>
-          <ModeratorDisplay
-            moderatorClassification={moderatorClassification}
-            profaneTerms={profaneTerms}
-          />
-          <SentimentDisplay sentimentScore={sentimentScore} />
+          {customError.length > 0 ? (
+            <p>{customError}</p>
+          ) : (
+            <React.Fragment>
+              <ModeratorDisplay
+                moderatorClassification={moderatorClassification}
+                profaneTerms={profaneTerms}
+              />
+              <SentimentDisplay sentimentScore={sentimentScore} />
+            </React.Fragment>
+          )}
         </React.Fragment>
+      ) : (
+        <p>LOADING...</p>
       )}
     </div>
   );
