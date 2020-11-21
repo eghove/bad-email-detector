@@ -6,22 +6,8 @@ import api from "../../utils/api";
 import TextForm from "../TextForm/TextForm";
 import SentimentDisplay from "../SentimentDisplay/SentimentDisplay";
 import ModeratorDisplay from "../ModeratorDisplay/ModeratorDisplay";
-// import types
-import { moderatorClassification } from "../../types/ModeratorTypes";
-
-// helper variables TODO: Extract these helpders somewhere.
-const initModeratorScores: moderatorClassification = {
-  ExplicitAdult: {},
-  ProfaneOffensive: {},
-  ReviewRecommended: false,
-  SuggestiveMature: {},
-};
-
-const apiCallStates = {
-  initial: "initial",
-  inProgress: "in_progress",
-  complete: "complete",
-};
+// import helper variables
+import { initModeratorScores, apiCallStates } from "./helperVariables";
 
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = (props: any) => {
