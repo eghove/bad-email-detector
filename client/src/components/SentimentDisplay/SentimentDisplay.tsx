@@ -2,7 +2,6 @@ import React, { FormEvent, useState } from "react";
 import styles from "./SentimentDisplay.module.css";
 
 // The component where user enters text. It will live inside BusinessLogic component
-// TODO: Figure out how to handle props without 'any' type.
 
 type SentimentDisplayProps = {
   sentimentScore: number;

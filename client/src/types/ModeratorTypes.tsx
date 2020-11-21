@@ -1,11 +1,30 @@
 export type moderatorClassification = {
-  ExplicitAdult: object;
-  ProfaneOffensive: object;
+  ExplicitAdult: ExplicitAdult;
+  ProfaneOffensive: ProfaneOffensive;
   ReviewRecommended: boolean;
-  SuggestiveMature: object;
+  SuggestiveMature: SuggestiveMature;
+};
+
+export type ExplicitAdult = {
+  Score: number;
+};
+
+export type ProfaneOffensive = {
+  Score: number;
+};
+
+export type SuggestiveMature = {
+  Score: number;
 };
 
 export type ModeratorDisplayProps = {
   moderatorClassification: moderatorClassification;
-  profaneTerms: Array<object>;
+  profaneTerms: ProfaneTermsObject[];
+};
+
+export type ProfaneTermsObject = {
+  Index: number;
+  ListId: number;
+  OriginalIndex: number;
+  Term: string;
 };
