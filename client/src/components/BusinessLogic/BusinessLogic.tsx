@@ -76,7 +76,6 @@ const BusinessLogic = (props: any) => {
 
   return (
     <div className={styles.BusinessLogic}>
-      <p>{userText}</p>
       <TextForm
         setUserText={setUserText}
         // presumes I want to handle the submission within the TextForm

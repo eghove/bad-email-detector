@@ -5,7 +5,6 @@ import {
   ModeratorDisplayProps,
   ProfaneTermsObject,
 } from "../../types/ModeratorTypes";
-import { validateLocaleAndSetLanguage } from "typescript";
 
 const ModeratorDisplay = ({
   moderatorClassification,
