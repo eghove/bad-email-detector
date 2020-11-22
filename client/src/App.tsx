@@ -7,7 +7,7 @@ import BusinessLogic from "./components/BusinessLogic/BusinessLogic";
 function App() {
   return (
     <div className="App">
-      <Header text="Welcome to the Check Yourself App!" />
+      <Header title="Check Yourself" />
       <Summary text="This is an app" />
       <BusinessLogic />
     </div>
