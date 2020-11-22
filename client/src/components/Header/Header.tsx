@@ -23,18 +23,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type HeaderDisplayProps = {
+type HeaderProps = {
   title: string;
 };
-const Header = ({ title }: HeaderDisplayProps) => {
+const Header = ({ title }: HeaderProps) => {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
         <Typography
-          component="h2"
-          variant="h5"
+          component="h1"
+          variant="h4"
           color="inherit"
           align="center"
           noWrap
