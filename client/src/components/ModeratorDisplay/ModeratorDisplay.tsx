@@ -5,6 +5,7 @@ import {
   ModeratorDisplayProps,
   ProfaneTermsObject,
 } from "../../types/ModeratorTypes";
+import { Typography } from "@material-ui/core";
 
 const ModeratorDisplay = ({
   moderatorClassification,
@@ -25,39 +26,41 @@ const ModeratorDisplay = ({
   // mini-component that will display appropriate review recommended text
   const parseReviewRecommended = (value: boolean) => {
     if (value === true) {
-      return <p>Your Tweet may require additional review</p>;
+      return <Typography>Your Tweet may require additional review</Typography>;
     } else {
-      return <p>Your Tweet may not require additional review</p>;
+      return (
+        <Typography>Your Tweet may not require additional review</Typography>
+      );
     }
   };
 
   // mini-component that will display ExplicitAdult
   const displayExplicitMature = (value: number) => {
     return (
-      <p>
-        The likelihood that your Tweet will be intepreted as sexually explicit
-        or adult in certain situations: {parseScore(value)}%
-      </p>
+      <Typography gutterBottom>
+        There is a <b>{parseScore(value)}%</b> that your Tweet will be read as
+        sexually explicit or adult.
+      </Typography>
     );
   };
 
   // mini-component that will display SuggestiveMature
   const displaySuggestiveMature = (value: number) => {
     return (
-      <p>
-        The likelihood that your Tweet will be intepreted as sexually suggestive
-        or mature in certain situations: {parseScore(value)}%
-      </p>
+      <Typography gutterBottom>
+        There is a <b>{parseScore(value)}%</b> that your Tweet will be read as
+        sexually suggestive or mature.
+      </Typography>
     );
   };
 
   // mini-component that will display ProfaneOffensive
   const displayProfaneOffensive = (value: number) => {
     return (
-      <p>
-        The likelihood that your Tweet will be intepreted as profane or
-        offensive in certain situations: {parseScore(value)}%
-      </p>
+      <Typography>
+        There is a <b>{parseScore(value)}%</b> that your Tweet will be read as
+        profane or offensive.
+      </Typography>
     );
   };
 
@@ -69,19 +72,18 @@ const ModeratorDisplay = ({
   const displayProfaneTerms = (value: Array<ProfaneTermsObject>) => {
     if (value.length > 0) {
       return (
-        <p>
+        <Typography>
           These profane or offensive terms were found in your Tweet:
           {value.map((v) => (
-            <li>{v.Term}</li>
+            <li key={v.Index}>{v.Term}</li>
           ))}
-        </p>
+        </Typography>
       );
     } else return null;
   };
 
   return (
     <div className={styles.ModeratorDisplay}>
-      {parseReviewRecommended(ReviewRecommended)}
       {displayExplicitMature(ExplicitAdult.Score)}
       {displaySuggestiveMature(SuggestiveMature.Score)}
       {displayProfaneOffensive(ProfaneOffensive.Score)}

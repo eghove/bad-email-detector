@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./Loading.module.css";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Grid from "@material-ui/core/Grid";
 import ApiCallStates from "../../sharedVariables/ApiCallStates";
 type ApiCallStatus = {
   sentimentApiCallStatus: string;
@@ -14,7 +16,11 @@ const Loading = ({
     sentimentApiCallStatus === ApiCallStates.inProgress ||
     moderatorApiCallStatus === ApiCallStates.inProgress
   ) {
-    return <div>Loading</div>;
+    return (
+      <Grid>
+        <CircularProgress color="secondary" size={100} />
+      </Grid>
+    );
   } else return null;
 };
 

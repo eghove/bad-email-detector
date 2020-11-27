@@ -1,10 +1,9 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
-import classes from "*.module.css";
+import ApiCallStates from "../../sharedVariables/ApiCallStates";
 
 const useStyles = makeStyles((theme) => ({
   textField: {},
@@ -28,6 +27,15 @@ const TextForm = (props: any) => {
     props.handleSubmit();
   };
 
+  const disabledWhileCallInProgress = (value1: string, value2: string) => {
+    if (
+      value1 === ApiCallStates.inProgress ||
+      value2 === ApiCallStates.inProgress
+    ) {
+      return true;
+    } else return false;
+  };
+
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -44,6 +52,10 @@ const TextForm = (props: any) => {
         fullWidth
         variant="outlined"
         onChange={handleChange}
+        disabled={disabledWhileCallInProgress(
+          props.sentimentApiCallStatus,
+          props.moderatorApiCallStatus
+        )}
       ></TextField>
       <Button
         className={classes.submitButton}
@@ -51,6 +63,10 @@ const TextForm = (props: any) => {
         color="primary"
         onClick={handleSubmit}
         fullWidth={true}
+        disabled={disabledWhileCallInProgress(
+          props.sentimentApiCallStatus,
+          props.moderatorApiCallStatus
+        )}
       >
         Check Yourself!
       </Button>

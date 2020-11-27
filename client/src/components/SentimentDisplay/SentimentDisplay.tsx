@@ -1,4 +1,5 @@
-import React, { FormEvent, useState } from "react";
+import { Typography } from "@material-ui/core";
+import React from "react";
 import styles from "./SentimentDisplay.module.css";
 
 // The component where user enters text. It will live inside BusinessLogic component
@@ -14,10 +15,10 @@ const SentimentDisplay = ({ sentimentScore }: SentimentDisplayProps) => {
   if (sentimentScore > 0) {
     return (
       <div className={styles.SentimentDisplay}>
-        <p>
-          There is a {parseSentimentScore(sentimentScore)}% chance your Tweet
-          will be read positively.
-        </p>
+        <Typography gutterBottom>
+          There is a <b>{parseSentimentScore(sentimentScore)}%</b> chance your
+          Tweet will be read positively.
+        </Typography>
       </div>
     );
   } else return null;

@@ -12,6 +12,7 @@ import Loading from "../Loading/Loading";
 // import outside variables
 import ApiCallStates from "../../sharedVariables/ApiCallStates";
 import { initModeratorScores } from "./helperVariables";
+import { Typography } from "@material-ui/core";
 
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = (props: any) => {
@@ -77,9 +78,14 @@ const BusinessLogic = (props: any) => {
   };
 
   return (
-    <Grid container xs={12} spacing={2}>
+    <Grid container spacing={2}>
       <Grid item xs={6}>
-        <TextForm setUserText={setUserText} handleSubmit={handleSubmit} />
+        <TextForm
+          setUserText={setUserText}
+          handleSubmit={handleSubmit}
+          sentimentApiCallStatus={sentimentApiCallStatus}
+          moderatorApiCallStatus={moderatorApiCallStatus}
+        />
       </Grid>
       <Grid item xs={6}>
         {/* If BOTH requests are complete, render the fragment that displays customError if one exists, or the fragment that renders ModeratorDisplay or SentimentDisplay
@@ -91,11 +97,14 @@ const BusinessLogic = (props: any) => {
               <p>{customError}</p>
             ) : (
               <React.Fragment>
+                <Typography variant="h6" gutterBottom align="center">
+                  Results
+                </Typography>
+                <SentimentDisplay sentimentScore={sentimentScore} />
                 <ModeratorDisplay
                   moderatorClassification={moderatorClassification}
                   profaneTerms={profaneTerms}
                 />
-                <SentimentDisplay sentimentScore={sentimentScore} />
               </React.Fragment>
             )}
           </React.Fragment>
