@@ -2,7 +2,9 @@ import React, { FormEvent, useState } from "react";
 import styles from "./BusinessLogic.module.css";
 // importing utilities
 import api from "../../utils/api";
-// importing components
+// importing material ui components
+import Grid from "@material-ui/core/Grid";
+// importing child components
 import TextForm from "../TextForm/TextForm";
 import SentimentDisplay from "../SentimentDisplay/SentimentDisplay";
 import ModeratorDisplay from "../ModeratorDisplay/ModeratorDisplay";
@@ -75,36 +77,36 @@ const BusinessLogic = (props: any) => {
   };
 
   return (
-    <div className={styles.BusinessLogic}>
-      <TextForm
-        setUserText={setUserText}
-        // presumes I want to handle the submission within the TextForm
-        handleSubmit={handleSubmit}
-      />
-      {/* If BOTH requests are complete, render the fragment that displays customError if one exists, or the fragment that renders ModeratorDisplay or SentimentDisplay
+    <Grid container xs={12} spacing={2}>
+      <Grid item xs={6}>
+        <TextForm setUserText={setUserText} handleSubmit={handleSubmit} />
+      </Grid>
+      <Grid item xs={6}>
+        {/* If BOTH requests are complete, render the fragment that displays customError if one exists, or the fragment that renders ModeratorDisplay or SentimentDisplay
       ELSE render the Loading component */}
-      {sentimentApiCallStatus === ApiCallStates.complete &&
-      moderatorApiCallStatus === ApiCallStates.complete ? (
-        <React.Fragment>
-          {customError.length > 0 ? (
-            <p>{customError}</p>
-          ) : (
-            <React.Fragment>
-              <ModeratorDisplay
-                moderatorClassification={moderatorClassification}
-                profaneTerms={profaneTerms}
-              />
-              <SentimentDisplay sentimentScore={sentimentScore} />
-            </React.Fragment>
-          )}
-        </React.Fragment>
-      ) : (
-        <Loading
-          sentimentApiCallStatus={sentimentApiCallStatus}
-          moderatorApiCallStatus={moderatorApiCallStatus}
-        />
-      )}
-    </div>
+        {sentimentApiCallStatus === ApiCallStates.complete &&
+        moderatorApiCallStatus === ApiCallStates.complete ? (
+          <React.Fragment>
+            {customError.length > 0 ? (
+              <p>{customError}</p>
+            ) : (
+              <React.Fragment>
+                <ModeratorDisplay
+                  moderatorClassification={moderatorClassification}
+                  profaneTerms={profaneTerms}
+                />
+                <SentimentDisplay sentimentScore={sentimentScore} />
+              </React.Fragment>
+            )}
+          </React.Fragment>
+        ) : (
+          <Loading
+            sentimentApiCallStatus={sentimentApiCallStatus}
+            moderatorApiCallStatus={moderatorApiCallStatus}
+          />
+        )}
+      </Grid>
+    </Grid>
   );
 };
 
