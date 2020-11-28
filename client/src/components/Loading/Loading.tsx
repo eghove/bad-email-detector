@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./Loading.module.css";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import ApiCallStates from "../../sharedVariables/ApiCallStates";
@@ -17,8 +16,10 @@ const Loading = ({
     moderatorApiCallStatus === ApiCallStates.inProgress
   ) {
     return (
-      <Grid>
-        <CircularProgress color="secondary" size={100} />
+      <Grid container spacing={0} direction="column" alignItems="center">
+        <Grid item>
+          <CircularProgress color="secondary" size={100} />
+        </Grid>
       </Grid>
     );
   } else return null;
