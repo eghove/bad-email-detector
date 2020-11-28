@@ -24,12 +24,18 @@ const ModeratorDisplay = ({
   };
 
   // mini-component that will display appropriate review recommended text
-  const parseReviewRecommended = (value: boolean) => {
+  const displayReviewRecommended = (value: boolean) => {
     if (value === true) {
-      return <Typography>Your Tweet may require additional review</Typography>;
+      return (
+        <Typography>
+          <b>Your may want to revise your Tweet.</b>
+        </Typography>
+      );
     } else {
       return (
-        <Typography>Your Tweet may not require additional review</Typography>
+        <Typography>
+          <b>Your Tweet is probably fine.</b>
+        </Typography>
       );
     }
   };
@@ -57,26 +63,34 @@ const ModeratorDisplay = ({
   // mini-component that will display ProfaneOffensive
   const displayProfaneOffensive = (value: number) => {
     return (
-      <Typography>
+      <Typography gutterBottom>
         There is a <b>{parseScore(value)}%</b> that your Tweet will be read as
         profane or offensive.
       </Typography>
     );
   };
 
-  const listItems = (arr: Array<ProfaneTermsObject>) => {
-    arr.map((value) => <li>{value.Term}</li>);
+  // helper function to return uniqueProfaneTerms
+  const uniqueProfaneTerms = (value: Array<ProfaneTermsObject>) => {
+    let uniqueTerms: string[] = [];
+    value.forEach((element) => {
+      if (!uniqueTerms.includes(element.Term)) {
+        uniqueTerms.push(element.Term);
+      }
+    });
+    return uniqueTerms;
   };
 
   //mini-component for the profane terms
   const displayProfaneTerms = (value: Array<ProfaneTermsObject>) => {
     if (value.length > 0) {
+      let uniqueTerms = uniqueProfaneTerms(value);
       return (
-        <Typography>
+        <Typography gutterBottom>
           These profane or offensive terms were found in your Tweet:
-          {value.map((v) => (
-            <li key={v.Index}>{v.Term}</li>
-          ))}
+          {uniqueTerms.map((v, index) => {
+            return <li key={index}>{v}</li>;
+          })}
         </Typography>
       );
     } else return null;
@@ -88,6 +102,7 @@ const ModeratorDisplay = ({
       {displaySuggestiveMature(SuggestiveMature.Score)}
       {displayProfaneOffensive(ProfaneOffensive.Score)}
       {displayProfaneTerms(profaneTerms)}
+      {displayReviewRecommended(ReviewRecommended)}
     </div>
   );
 };

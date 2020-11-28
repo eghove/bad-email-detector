@@ -43,7 +43,6 @@ const Header = ({ title }: HeaderProps) => {
           {title}
         </Typography>
         <Link
-          component="button"
           color="inherit"
           variant="body2"
           href="https://github.com/eghove/bad-email-detector/blob/master/README.md"

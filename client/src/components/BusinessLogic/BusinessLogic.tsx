@@ -12,7 +12,13 @@ import Loading from "../Loading/Loading";
 // import outside variables
 import ApiCallStates from "../../sharedVariables/ApiCallStates";
 import { initModeratorScores } from "./helperVariables";
-import { Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  mainCols: {
+    padding: theme.spacing(3),
+  },
+}));
 
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = (props: any) => {
@@ -77,15 +83,18 @@ const BusinessLogic = (props: any) => {
     getSentimentData(userText);
   };
 
+  // check if userText is empty, this boolean gets passed down to TextForm component
   const isUserTextEmpty = (value: string) => {
     if (value.length === 0) {
       return true;
     } else return false;
   };
 
+  const classes = useStyles();
+
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={6}>
+    <Grid container>
+      <Grid item xs={6} className={classes.mainCols}>
         <TextForm
           setUserText={setUserText}
           handleSubmit={handleSubmit}
@@ -94,7 +103,7 @@ const BusinessLogic = (props: any) => {
           userTextEmpty={isUserTextEmpty(userText)}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={6} className={classes.mainCols}>
         {/* If BOTH requests are complete, render the fragment that displays customError if one exists, or the fragment that renders ModeratorDisplay or SentimentDisplay
       ELSE render the Loading component */}
         {sentimentApiCallStatus === ApiCallStates.complete &&
