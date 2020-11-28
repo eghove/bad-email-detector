@@ -77,6 +77,12 @@ const BusinessLogic = (props: any) => {
     getSentimentData(userText);
   };
 
+  const isUserTextEmpty = (value: string) => {
+    if (value.length === 0) {
+      return true;
+    } else return false;
+  };
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={6}>
@@ -85,6 +91,7 @@ const BusinessLogic = (props: any) => {
           handleSubmit={handleSubmit}
           sentimentApiCallStatus={sentimentApiCallStatus}
           moderatorApiCallStatus={moderatorApiCallStatus}
+          userTextEmpty={isUserTextEmpty(userText)}
         />
       </Grid>
       <Grid item xs={6}>
