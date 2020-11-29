@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./Header.module.css";
 // material-ui components
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";

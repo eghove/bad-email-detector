@@ -1,5 +1,4 @@
 import React, { FormEvent, useState } from "react";
-import styles from "./BusinessLogic.module.css";
 // importing utilities
 import api from "../../utils/api";
 // importing material ui components
@@ -21,7 +20,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
-const BusinessLogic = (props: any) => {
+const BusinessLogic = () => {
+  // STATE
   const [userText, setUserText] = useState("");
   const [sentimentApiCallStatus, setSentimentApiCallStatus] = useState(
     ApiCallStates.initial
@@ -36,10 +36,8 @@ const BusinessLogic = (props: any) => {
     initModeratorScores
   );
   const [profaneTerms, setProfaneTerms] = useState([]);
-
   // sentiment state
   const [sentimentScore, setSentimentScore] = useState(0);
-  const [sentimentError, setSentimentError] = useState([]);
 
   // helper function for getModeratorScores
   const getModeratorData = async (userText: string) => {
@@ -60,7 +58,6 @@ const BusinessLogic = (props: any) => {
       setCustomError(results.data.customError);
     } else {
       setSentimentScore(results.data.score);
-      setSentimentError(results.data.errors);
     }
     setSentimentApiCallStatus(ApiCallStates.complete);
   };
@@ -71,7 +68,6 @@ const BusinessLogic = (props: any) => {
     setModeratorApiCallStatus(ApiCallStates.complete);
     setCustomError("");
     setSentimentScore(0);
-    setSentimentError([]);
     setModeratorClassification(initModeratorScores);
     setProfaneTerms([]);
   };
