@@ -2,15 +2,12 @@ import React from "react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from "@material-ui/core/Grid";
 import ApiCallStates from "../../sharedVariables/ApiCallStates";
-type ApiCallStatus = {
-  sentimentApiCallStatus: string;
-  moderatorApiCallStatus: string;
-};
-
+// importing types
+import { LoadingProps } from "../../types/LoadingProps";
 const Loading = ({
   sentimentApiCallStatus,
   moderatorApiCallStatus,
-}: ApiCallStatus) => {
+}: LoadingProps) => {
   if (
     sentimentApiCallStatus === ApiCallStates.inProgress ||
     moderatorApiCallStatus === ApiCallStates.inProgress

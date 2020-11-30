@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
+// import type
+import { HeaderProps } from "../../types/HeaderProps";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -22,9 +24,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type HeaderProps = {
-  title: string;
-};
 const Header = ({ title }: HeaderProps) => {
   const classes = useStyles();
 

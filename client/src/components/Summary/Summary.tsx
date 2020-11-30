@@ -5,6 +5,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
+// importing types
+import { SummaryProps } from "../../types/SummaryProps";
 
 const useStyles = makeStyles((theme) => ({
   mainFeaturedPost: {
@@ -34,11 +36,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-type SummaryProps = {
-  summaryTitle: string;
-  summaryText: string;
-};
 
 const Summary = ({ summaryTitle, summaryText }: SummaryProps) => {
   const classes = useStyles();

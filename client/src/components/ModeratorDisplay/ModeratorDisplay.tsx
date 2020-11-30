@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./ModeratorDisplay.module.css";
 // importing types
 import {
   ModeratorDisplayProps,
@@ -97,13 +96,13 @@ const ModeratorDisplay = ({
   };
 
   return (
-    <div className={styles.ModeratorDisplay}>
+    <React.Fragment>
       {displayExplicitMature(ExplicitAdult.Score)}
       {displaySuggestiveMature(SuggestiveMature.Score)}
       {displayProfaneOffensive(ProfaneOffensive.Score)}
       {displayProfaneTerms(profaneTerms)}
       {displayReviewRecommended(ReviewRecommended)}
-    </div>
+    </React.Fragment>
   );
 };
 
