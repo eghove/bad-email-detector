@@ -1,9 +1,10 @@
-import React, { FormEvent } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import { Button } from "@material-ui/core";
-import ApiCallStates from "../../sharedVariables/ApiCallStates";
+// import the helper functions for TextForm
+import { disabledWhileCallInProgress, disableButton } from "./textFormHelpers";
 
 const useStyles = makeStyles((theme) => ({
   textField: {},
@@ -18,37 +19,7 @@ const TextForm = (props: any) => {
   // TODO: figure out the correct type to use for handleChange.
   const handleChange = (event: any) => {
     // passes the entered text up to the parent level component for state management
-    props.setUserText(event.target.value);
-  };
-
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-    // calls the submission handler from the parent component, once again presuming I want the submission button within the form.
-    props.handleSubmit();
-  };
-
-  // evaluates whether to disable while call in progress
-  const disabledWhileCallInProgress = (value1: string, value2: string) => {
-    if (
-      value1 === ApiCallStates.inProgress ||
-      value2 === ApiCallStates.inProgress
-    ) {
-      return true;
-    } else return false;
-  };
-
-  // button should be disabled if call in progress OR user entry empty.
-  const disableButton = (
-    apiCallState1: string,
-    apiCallState2: string,
-    userTextEmpty: boolean
-  ) => {
-    if (
-      disabledWhileCallInProgress(apiCallState1, apiCallState2) ||
-      userTextEmpty === true
-    ) {
-      return true;
-    } else return false;
+    props.handleChange(event.target.value);
   };
 
   const classes = useStyles();
@@ -76,7 +47,7 @@ const TextForm = (props: any) => {
         className={classes.submitButton}
         variant="contained"
         color="primary"
-        onClick={handleSubmit}
+        onClick={props.handleSubmit}
         fullWidth={true}
         disabled={disableButton(
           props.sentimentApiCallStatus,

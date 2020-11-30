@@ -92,7 +92,7 @@ const BusinessLogic = () => {
     <Grid container>
       <Grid item xs={6} className={classes.mainCols}>
         <TextForm
-          setUserText={setUserText}
+          handleChange={setUserText}
           handleSubmit={handleSubmit}
           sentimentApiCallStatus={sentimentApiCallStatus}
           moderatorApiCallStatus={moderatorApiCallStatus}
