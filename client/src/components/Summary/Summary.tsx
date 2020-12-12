@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: "url(https://source.unsplash.com/random)",
+    backgroundImage: "url(/logan-weaver-unsplash.jpg)",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
@@ -57,6 +57,7 @@ const Summary = ({ summaryTitle, summaryText }: SummaryProps) => {
               {summaryText}
             </Typography>
             <Link
+              color="inherit"
               variant="subtitle1"
               href="https://github.com/eghove/bad-email-detector/blob/master/README.md"
             >

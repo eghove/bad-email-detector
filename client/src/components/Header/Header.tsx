@@ -44,6 +44,7 @@ const Header = ({ title }: HeaderProps) => {
           color="inherit"
           variant="body2"
           href="https://github.com/eghove/bad-email-detector/blob/master/README.md"
+          target="_blank"
         >
           About
         </Link>
