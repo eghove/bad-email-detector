@@ -60,6 +60,7 @@ const Summary = ({ summaryTitle, summaryText }: SummaryProps) => {
               color="inherit"
               variant="subtitle1"
               href="https://github.com/eghove/bad-email-detector/blob/master/README.md"
+              target="_blank"
             >
               Learn more...
             </Link>
