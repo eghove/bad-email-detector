@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 // this is going to holder that actual interactive behavior. This is the component that will hold state used for submission to and reporting from the api.
 const BusinessLogic = () => {
-  // STATE
+  //#region STATE
   const [userText, setUserText] = useState("");
   const [sentimentApiCallStatus, setSentimentApiCallStatus] = useState(
     ApiCallStates.initial
@@ -38,7 +38,9 @@ const BusinessLogic = () => {
   const [profaneTerms, setProfaneTerms] = useState([]);
   // sentiment state
   const [sentimentScore, setSentimentScore] = useState(0);
+  //#endregion
 
+  //#region HELPER FUNCTIONS
   // helper function for getModeratorScores
   const getModeratorData = async (userText: string) => {
     setModeratorApiCallStatus(ApiCallStates.inProgress);
@@ -85,6 +87,7 @@ const BusinessLogic = () => {
       return true;
     } else return false;
   };
+  //#endregion
 
   const classes = useStyles();
 
