@@ -27,3 +27,17 @@ Check Yourself! uses the following technologies:
 * Heroku,
 * Microsoft Azure’s Text Analytics Service, and
 * Microsoft Azure’s Content Moderator (for text).
+
+# To Get Started Yourself Locally
+1. Clone this repository.
+1. Navigate to the root and execute `npm install`. This should install all dependencues used by the back-end and front-end.
+1. Create an untracked `.env` file at the root. Should be at the same level as `server.js`.
+1. Use or create a Microsoft Azure account.
+1. Using your Microsoft Azure account, create a Text Analytics resource. From that resource, copy down the:
+   1. API Key
+   1. API Endpoint
+1. Using your Microsoft Azure account, create a Content Moderator resource. From that resource, copy down the:
+   1. API Key
+   1. API Endpoint
+   1. Location
+1. Populate the `.env` file created in #3 with the following values:
