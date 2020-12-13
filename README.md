@@ -41,3 +41,11 @@ Check Yourself! uses the following technologies:
    1. API Endpoint
    1. Location
 1. Populate the `.env` file created in #3 with the following values:
+   ```
+   TEXT_ANALYTICS_KEY = value_from_5.i
+   TEXT_ANALYTICS_ENDPOINT = value_from_5.ii
+   MOD_SCREEN_KEY = value_from_6.i
+   MOD_SCREEN_ENDPOINT = value_from_6.ii
+   MOD_SCREEN_LOCATION = value_from_6.iii
+   ```
+1. In the root of the clone repository, execute `npm start`. Happy coding!
